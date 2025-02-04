@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],server: {
     proxy: {
       "/api": {
-        target: "http://localhost:8080",
+        target: "https://grocery-list-backend-delta.vercel.app",
         changeOrigin: true,
       },
     }
