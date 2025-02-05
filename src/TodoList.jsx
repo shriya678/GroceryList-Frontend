@@ -259,6 +259,7 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+const API_BASE_URL = "https://grocerylist-backend.onrender.com/api";
 
 export default function TodoList() {
   let [todos, setTodos] = useState([]);
@@ -267,7 +268,7 @@ export default function TodoList() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get("/api/items");
+        const response = await axios.get(`${API_BASE_URL}/items`);
         setTodos(response.data);
       } catch (error) {
         console.error("Error fetching items:", error);
@@ -278,7 +279,7 @@ export default function TodoList() {
 
   let addNewTask = async () => {
     try {
-      const response = await axios.post("/api/items", {
+      const response = await axios.post(`${API_BASE_URL}/items`, {
         item: newTodo,
         count: 1,
         isDone: false,
@@ -297,7 +298,7 @@ export default function TodoList() {
   let incrementItemCount = async (id) => {
     try {
       console.log("Incrementing item count");
-      const response = await axios.put(`/api/items/${id}`); // Backend increments count
+      const response = await axios.put(`${API_BASE_URL}/items/${id}`); // Backend increments count
       setTodos((prevTodos) => {
         const updatedTodos = prevTodos.map((todo) =>
           todo._id === id ? { ...todo, count: response.data.count } : todo
