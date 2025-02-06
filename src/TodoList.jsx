@@ -327,6 +327,15 @@ export default function TodoList() {
     );
   };
 
+  let deleteItem = async (id) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/items/${id}`);
+      setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== id));
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+
   return (
     <div>
       <input
@@ -367,6 +376,13 @@ export default function TodoList() {
               style={{ marginLeft: "10px" }}
             >
               Mark As Done
+            </button>
+
+            <button
+              onClick={() => deleteItem(todo._id)}
+              style={{ marginLeft: "10px", color: "red" }}
+            >
+              Delete
             </button>
           </li>
         ))}
